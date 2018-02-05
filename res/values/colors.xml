@@ -18,15 +18,17 @@
     <color name="tab_background_color">@android:color/transparent</color>
     <color name="tab_text_color">@*android:color/accent_device_default_light</color>
     <color name="white">#FFF</color>
+    <color name="tormenta_category_icon_tint">@*android:color/notification_material_background_color</color>
+    <color name="preference_background_color">@*android:color/accent_device_default_light</color>
 
-    <color name="owlsnest_oval_advanced">#ff6868</color>
-    <color name="owlsnest_oval_buttons">#31aa5c</color>
-    <color name="owlsnest_oval_gesture">#ffaf66</color>
-    <color name="owlsnest_oval_lockscreen">#84a7f4</color>
-    <color name="owlsnest_oval_nav">#f4d484</color>
-    <color name="owlsnest_oval_notif">#9863d8</color>
-    <color name="owlsnest_oval_qs">#fa6dff</color>
-    <color name="owlsnest_oval_recents">#6fdb3d</color>
-    <color name="owlsnest_oval_status">#8da2e8</color>
+    <color name="tormenta_oval_advanced">#ff6868</color>
+    <color name="tormenta_oval_buttons">#31aa5c</color>
+    <color name="tormenta_oval_gesture">#ffaf66</color>
+    <color name="tormenta_oval_lockscreen">#84a7f4</color>
+    <color name="tormenta_oval_nav">#f4d484</color>
+    <color name="tormenta_oval_notif">#9863d8</color>
+    <color name="tormenta_oval_qs">#fa6dff</color>
+    <color name="tormenta_oval_recents">#6fdb3d</color>
+    <color name="tormenta_oval_status">#8da2e8</color>
 
 </resources>
