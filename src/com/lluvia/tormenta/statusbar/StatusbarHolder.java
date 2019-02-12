@@ -36,12 +36,14 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.SwitchPreference;
 
+import com.android.internal.util.lluvia.lluviaUtils;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.R;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Indexable;
 import com.android.settings.SettingsPreferenceFragment;
 import com.lluvia.support.preference.CustomSeekBarPreference;
+import com.lluvia.support.preference.SecureSettingIntListPreference;
 import com.lluvia.support.preference.SystemSettingSwitchPreference;
 
 import java.util.ArrayList;
@@ -51,6 +53,7 @@ import java.util.List;
 public class StatusbarHolder extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener, Indexable {
 
+    private static final String CLOCK_POSITION = "status_bar_clock_position";
     private static final String PREF_AM_PM_STYLE = "status_bar_am_pm";
     private static final String PREF_CLOCK_DATE_DISPLAY = "clock_date_display";
     private static final String PREF_CLOCK_DATE_STYLE = "clock_date_style";
@@ -75,6 +78,7 @@ public class StatusbarHolder extends SettingsPreferenceFragment implements
 
     private static final String NETWORK_TRAFFIC_FONT_SIZE  = "network_traffic_font_size";
 
+    private SecureSettingIntListPreference mClockPosition;
     private ListPreference mClockAmPmStyle;
     private ListPreference mClockDateDisplay;
     private ListPreference mClockDateStyle;
@@ -92,12 +96,24 @@ public class StatusbarHolder extends SettingsPreferenceFragment implements
     private CustomSeekBarPreference mThreshold;
     private SystemSettingSwitchPreference mShowArrows;
 
+    private Context mContext;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.statusbar);
         final ContentResolver resolver = getActivity().getContentResolver();
 
+        mClockPosition = (SecureSettingIntListPreference) findPreference(CLOCK_POSITION);
+
+        // Adjust status bar clock prefs for notched devices
+        if (lluviaUtils.hasNotch(getActivity())) {
+            mClockPosition.setEntries(R.array.clock_position_entries_notch);
+            mClockPosition.setEntryValues(R.array.clock_position_values_notch);
+        } else {
+            mClockPosition.setEntries(R.array.clock_position_entries);
+            mClockPosition.setEntryValues(R.array.clock_position_values);
+        }
         mClockAmPmStyle = (ListPreference) findPreference(PREF_AM_PM_STYLE);
         mClockAmPmStyle.setOnPreferenceChangeListener(this);
         mClockAmPmStyle.setValue(Integer.toString(Settings.Secure.getInt(getActivity()
@@ -400,6 +416,19 @@ public class StatusbarHolder extends SettingsPreferenceFragment implements
                 break;
             default: 
                 break;
+        }
+    }
+
+    public void onResume(Context context) {
+        super.onResume();
+
+        // Adjust status bar clock prefs for notched devices
+        if (lluviaUtils.hasNotch(getActivity())) {
+            mClockPosition.setEntries(R.array.clock_position_entries_notch);
+            mClockPosition.setEntryValues(R.array.clock_position_values_notch);
+        } else {
+            mClockPosition.setEntries(R.array.clock_position_entries);
+            mClockPosition.setEntryValues(R.array.clock_position_values);
         }
     }
 
