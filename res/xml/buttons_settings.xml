@@ -19,11 +19,11 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/buttons_title">
 
-     <com.tormenta.settings.preference.SystemSettingSwitchPreference
-            android:key="advanced_reboot"
-            android:title="@string/advanced_reboot_title"
-            android:summary="@string/advanced_reboot_summary"
-            android:defaultValue="false" />
+    <Preference
+        android:fragment="com.tormenta.settings.fragments.PowerMenuSettings"
+        android:key="powermenu_settings"
+        android:summary="@string/powermenu_summary"
+        android:title="@string/powermenu_title" />
 
     <PreferenceCategory
             android:key="volume_keys"
