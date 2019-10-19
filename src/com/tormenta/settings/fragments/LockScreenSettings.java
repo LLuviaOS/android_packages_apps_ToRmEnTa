@@ -18,7 +18,11 @@ package com.tormenta.settings.fragments;
 
 import android.os.Bundle;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import androidx.preference.Preference;
 import android.provider.SearchIndexableResource;
+import android.provider.Settings;
 
 import com.android.settings.R;
 
@@ -29,16 +33,39 @@ import com.android.settings.SettingsPreferenceFragment;
 
 import com.android.internal.logging.nano.MetricsProto;
 
+import com.tormenta.settings.preference.CustomSeekBarPreference;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class LockScreenSettings extends SettingsPreferenceFragment implements Indexable {
+public class LockScreenSettings extends SettingsPreferenceFragment implements
+      Preference.OnPreferenceChangeListener, Indexable {
+
+    private static final String KEY_LOCKSCREEN_MEDIA_BLUR = "lockscreen_media_blur";
+    private CustomSeekBarPreference mLockscreenMediaBlur;
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         addPreferencesFromResource(R.xml.lockscreen_settings);
 
+        int defaultBlur = 25;
+        mLockscreenMediaBlur = (CustomSeekBarPreference) findPreference(KEY_LOCKSCREEN_MEDIA_BLUR);
+        int value = Settings.System.getInt(getContentResolver(),
+                Settings.System.OMNI_LOCKSCREEN_MEDIA_BLUR, defaultBlur);
+        mLockscreenMediaBlur.setValue(value);
+        mLockscreenMediaBlur.setOnPreferenceChangeListener(this);
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mLockscreenMediaBlur) {
+            int value = (Integer) newValue;
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.OMNI_LOCKSCREEN_MEDIA_BLUR, value);
+            return true;
+        }
+        return true;
     }
 
     @Override

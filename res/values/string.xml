@@ -225,4 +225,8 @@
     <string name="double_tap_sleep_lockscreen_title">Double tap to sleep</string>
     <string name="double_tap_sleep_lockscreen_summary">Double tap anywhere on the lockscreen to put phone to sleep</string>
 
+    <!-- lock screen media blur -->
+    <string name="lockscreen_media_blur_title">Media artwork blur level</string>
+    <string name="lockscreen_media_blur_summary">Control the blur amount of media artwork</string>
+
 </resources>

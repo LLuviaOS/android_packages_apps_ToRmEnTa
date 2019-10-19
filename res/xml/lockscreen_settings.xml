@@ -43,4 +43,13 @@
         android:title="@string/lockscreen_battery_info_title"
         android:summary="@string/lockscreen_battery_info_summary"
         android:defaultValue="true" />
+
+    <com.tormenta.settings.preference.CustomSeekBarPreference
+        android:key="lockscreen_media_blur"
+        android:title="@string/lockscreen_media_blur_title"
+        android:summary="@string/lockscreen_media_blur_summary"
+        android:max="2500"
+        settings:min="1"
+        android:persistent="false" />
+
 </PreferenceScreen>
