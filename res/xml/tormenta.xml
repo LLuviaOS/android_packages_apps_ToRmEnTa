@@ -38,4 +38,11 @@
         android:summary="@string/lockscreen_category_summary"
         android:title="@string/lockscreen_category_title" />
 
+    <PreferenceScreen
+        android:fragment="com.tormenta.settings.fragments.GesturesSettings"
+        android:icon="@drawable/ic_gestures_page"
+        android:key="gestures_category"
+        android:summary="@string/gestures_category_summary"
+        android:title="@string/gestures_category_title" />
+
 </PreferenceScreen>
