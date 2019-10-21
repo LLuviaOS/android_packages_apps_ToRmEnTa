@@ -17,7 +17,7 @@
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="tormenta_settings_title">Tormenta</string>
-    <string name="tormenta_dashboard_summary">Where the Thunder meets the Rain</string>
+    <string name="tormenta_dashboard_summary">Powered for Customization</string>
 
     <string name="gestures_category_title">Gestures</string>
     <string name="gestures_category_summary">Various gestures settings</string>
