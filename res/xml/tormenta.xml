@@ -51,12 +51,12 @@
        android:summary="@string/buttons_summary"
        android:icon="@drawable/ic_tormenta_buttons_background" />
 
-    <PreferenceScreen
+    <!--PreferenceScreen
        android:key="recent"
        android:fragment="com.lluvia.tormenta.recent.RecentsHolder"
        android:title="@string/recent_title"
        android:summary="@string/recent_summary"
-       android:icon="@drawable/ic_tormenta_recents_background" />
+       android:icon="@drawable/ic_tormenta_recents_background" / -->
 
     <PreferenceScreen
        android:key="lockscreen"
