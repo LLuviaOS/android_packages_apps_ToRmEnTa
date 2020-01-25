@@ -293,8 +293,6 @@
     <string name="wake_screen_aware_off_dialog_content">To use Reach to check phone, turn on Motion Sense</string>
     <string name="wake_screen_aware_off_dialog_title">Reach to check phone is off</string>
 
-
-
     <!--tormenta lockscreen-->
     <string name="lockscreen_title">Lockscreen</string>
     <string name="lockscreen_summary">Customize lockscreen layout and options</string>
