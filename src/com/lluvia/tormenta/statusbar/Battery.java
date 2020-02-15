@@ -19,7 +19,6 @@ package com.lluvia.tormenta.statusbar;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.UserHandle;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
 import androidx.preference.ListPreference;
@@ -37,21 +36,60 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SearchIndexable
-public class StatusbarHolder extends SettingsPreferenceFragment implements
+public class Battery extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener, Indexable {
+
+    private static final String STATUS_BAR_SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
+    private static final String STATUS_BAR_BATTERY_TEXT_CHARGING = "status_bar_battery_text_charging";
+    private static final String BATTERY_PERCENTAGE_HIDDEN = "0";
+    private static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
+
+    private static final int BATTERY_STYLE_Q = 0;
+    private static final int BATTERY_STYLE_DOTTED_CIRCLE = 1;
+    private static final int BATTERY_STYLE_CIRCLE = 2;
+    private static final int BATTERY_STYLE_TEXT = 3;
+    private static final int BATTERY_STYLE_HIDDEN = 4;
+
+    private ListPreference mBatteryPercent;
+    private ListPreference mBatteryStyle;
+    private SwitchPreference mBatteryCharging;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.statusbar);
+        addPreferencesFromResource(R.xml.battery);
+        final ContentResolver resolver = getActivity().getContentResolver();
 
+        mBatteryPercent = (ListPreference) findPreference(STATUS_BAR_SHOW_BATTERY_PERCENT);
+        mBatteryCharging = (SwitchPreference) findPreference(STATUS_BAR_BATTERY_TEXT_CHARGING);
+        mBatteryStyle = (ListPreference) findPreference(STATUS_BAR_BATTERY_STYLE);
+        int batterystyle = Settings.System.getInt(resolver,
+                Settings.System.STATUS_BAR_BATTERY_STYLE, BATTERY_STYLE_Q);
+        mBatteryStyle.setOnPreferenceChangeListener(this);
+
+        updateBatteryOptions(batterystyle);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object objValue) {
+        if (preference == mBatteryStyle) {
+            int value = Integer.parseInt((String) objValue);
+            updateBatteryOptions(value);
             return true;
         }
         return false;
+    }
+
+    private void updateBatteryOptions(int batterystyle) {
+        boolean enabled = batterystyle != BATTERY_STYLE_TEXT && batterystyle != BATTERY_STYLE_HIDDEN;
+        if (batterystyle == BATTERY_STYLE_HIDDEN) {
+            mBatteryPercent.setValue(BATTERY_PERCENTAGE_HIDDEN);
+            mBatteryPercent.setSummary(mBatteryPercent.getEntry());
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, 0);
+        }
+        mBatteryCharging.setEnabled(enabled);
+        mBatteryPercent.setEnabled(enabled);
     }
 
     @Override
@@ -69,7 +107,7 @@ public class StatusbarHolder extends SettingsPreferenceFragment implements
                 ArrayList<SearchIndexableResource> result =
                     new ArrayList<SearchIndexableResource>();
                     SearchIndexableResource sir = new SearchIndexableResource(context);
-                    sir.xmlResId = R.xml.statusbar;
+                    sir.xmlResId = R.xml.battery;
                     result.add(sir);
                     return result;
             }
